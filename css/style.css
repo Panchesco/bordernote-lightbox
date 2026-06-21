@@ -1,0 +1,307 @@
+/* Prevent page behind modal from scrolling */
+
+:root {
+    --lightbox-mobile: 540px;
+    --lightbox-transition-duration: 600ms;
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+
+
+/* Full-viewport lightbox overlay */
+
+.lightbox * {
+    box-sizing: border-box;
+}
+
+.spinner {
+    display: none;
+   
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #fefefe;
+    color: #000;
+    /* The modal itself handles scrolling */
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    /* Helpful on mobile/iOS */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+.show-spinner .spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.show-spinner .spinner div {
+    background: pink;
+    animation-name: spinner;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.lightbox {
+    font-family: "Barlow";
+    font-size: 18px;
+    font-weight: 300;
+    letter-spacing: .1px;;
+    display: none;
+    opacity: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #fefefe;
+
+    /* The modal itself handles scrolling */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Helpful on mobile/iOS */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+.lightbox-closed .lightbox {
+    animation-name: lightboxOut;
+    animation-duration: var(--lightbox-transition-duration);
+    animation-fill-mode: forwards;
+}
+
+@keyframes lightboxOut {
+    0% { 
+        display: block;
+        opacity: 1;
+    }
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
+}
+
+
+
+.lightbox-open .lightbox {
+    display: block;
+    opacity: 0;
+    animation-name: lightboxIn;
+    animation-duration: var(--lightbox-transition-duration);
+    animation-fill-mode: forwards;
+}
+
+@keyframes lightboxIn {
+    from { 
+        display: block;
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Inner content wrapper */
+.lightbox .lightbox__content {
+    display: flex;
+    padding: 0 1rem 10rem 1rem;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: var(--lightbox-mobile);
+    margin: auto;   
+}
+
+.lightbox .heading-wrapper {
+    order: 1;
+}
+
+.lightbox h1 {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 1rem 0;
+    font-size: 1.4rem;
+}
+
+
+
+.lightbox h1 .age {
+    color: #888;
+    padding: 0 .4rem;
+}
+
+.lightbox h1 .locale {
+    color: #D1793B;
+}
+
+
+.image-container {
+    display: flex;
+    background: rgba(239,239,239,1);
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    order: 2;
+}
+
+
+.image-container.portrait {
+    /* aspect-ratio: 4/5;
+    max-height: 80%; */
+}
+
+
+.image-container img {
+    display: block;
+    box-sizing: border-box;
+    margin: auto;
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    
+}
+
+.copy-block {
+    order: 3;
+}
+
+
+.copy-wrapper p {
+    margin: 0 0 1rem 0;
+    padding: 0;
+    //text-indent: 2rem;
+}
+
+.copy-wrapper p:first-child {
+    text-indent: 0;
+}
+
+html[lang=es-ES] .en {
+    display: none;
+}
+
+html[lang=en-EN] .es {
+    display: none;
+}
+
+html[lang="en-EN"] .es-ES {
+   display: none;
+}
+
+html[lang="es-ES"] .en-EN {
+   display: none;
+}
+
+/* Optional close button */
+.lightbox__close {
+  position: relative;
+  text-align: right;
+  z-index: 10000;
+  border: 0;
+  font-size: 36px;
+  cursor: pointer;
+  padding: .6rem 1rem;
+  width: 100%;
+  margin: 0 auto 1rem;
+  order: 4;
+  background: none;
+  color: #fefefe;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  background: #022c3c;
+
+} 
+
+
+.scroll-to-top {
+    display: none;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    width: 60px;
+    height: 60px;
+    background: #022c3c;
+    color: #fff;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    animation-name: fadeOut;
+    animation-duration: var(--lightbox-transition-duration);
+    animation-direction: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes fadeOut {
+    from {
+        display: flex;
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        display: none;
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        display: flex;
+    }
+}
+
+.scroll-to-top.show {
+    display: flex;
+    opacity: 1;
+    animation-name: fadeIn;
+    animation-duration: var(--lightbox-transition-duration);
+    animation-iteration-count: 1;
+    animation-direction: forwards;
+}
+
+
+
+
+
+
+
+/*
+690px
+1024px
+1200px;
+2000px;
+*/
+
+
