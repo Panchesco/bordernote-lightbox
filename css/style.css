@@ -86,6 +86,7 @@ body.lightbox-open {
     /* Helpful on mobile/iOS */
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    padding: 3.3333rem 0;
 }
 
 .lightbox-closed .lightbox {
@@ -209,6 +210,14 @@ html[lang="en-EN"] .es-ES {
 
 html[lang="es-ES"] .en-EN {
    display: none;
+}
+
+#lightboxNavigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-indez: 9999;
 }
 
 /* Optional close button */
@@ -362,14 +371,21 @@ html[lang="es-ES"] .en-EN {
 
 .lightbox .lightbox__content .image-container {
     padding-top: 3.3333rem;
+    max-width: 100%;
 }
 
 .lightbox .lightbox__content .image-wrapper {
     padding: 0 0 0 2rem;
     order: 2;
-    flex: auto 1 0;
+    flex: 60% 1 0;
 }
+
+.lightbox .lightbox__content .image-container img {
+        max-width: 100%;
+        max-height: auto;
+    }
     .lightbox .lightbox__content .image-container.portrait img {
+        max-width: auto;
         max-height: 41.1111rem;
     }
 
