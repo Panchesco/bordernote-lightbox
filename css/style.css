@@ -1,13 +1,18 @@
 /* Prevent page behind modal from scrolling */
 
 :root {
-    --lightbox-mobile: 540px;
+    --lightbox-mobile: 640px;
     --lightbox-tablet: 940px;
     --lightbox-laptop: 1200px;
     --lightbox-desktop: 2000px;
     --lightbox-transition-duration: 600ms;
     --canvas-color: rgba(239,239,239,1);
     --gold: rgba(198,134,48,1);
+    --lightbox-background: #fefefe;
+    --lightbox-locale: #D1793B;
+    --lightbox-age: #888888;
+    --lightbox-darkest: #222222;
+    --navbar-background: #022c3c;
 }
 
 body.lightbox-open {
@@ -24,15 +29,14 @@ body.lightbox-open {
 
 .spinner {
     display: none;
-   
     position: fixed;
     inset: 0;
     z-index: 10000;
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    background: #fefefe;
-    color: #000;
+    background: var(--lightbox-background);
+    color: var(--lightbox-darkest);
     /* The modal itself handles scrolling */
     overflow-y: hidden;
     overflow-x: hidden;
@@ -77,7 +81,7 @@ body.lightbox-open {
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    background: #fefefe;
+    background: var(--lightbox-background);
 
     /* The modal itself handles scrolling */
     overflow-y: auto;
@@ -86,7 +90,8 @@ body.lightbox-open {
     /* Helpful on mobile/iOS */
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-    padding: 3.3333rem 0;
+    padding-top: 4.6666rem;
+    
 }
 
 .lightbox-closed .lightbox {
@@ -153,12 +158,12 @@ body.lightbox-open {
 
 
 .lightbox h1 .age {
-    color: #888;
+    color: var(--lightbox-age);
     padding: 0 .4rem;
 }
 
 .lightbox h1 .locale {
-    color: #D1793B;
+    color: var(--lightbox-locale);
 }
 
 
@@ -232,20 +237,20 @@ html[lang="es-ES"] .en-EN {
   margin: 0 auto 1rem;
   order: 4;
   background: none;
-  color: #fefefe;
+  color: var(--lightbox-background);
   text-transform: uppercase;
   display: flex;
   justify-content: space-between;
-  background: #022c3c;
+  background: var(--navbar-background);
 } 
 
 .lightbox__navigation a {
-    color: #fefefe;
-    text-decoration: none;
-    
+    color: var(--lightbox-background);
+    text-decoration: none; 
+    letter-spacing: .055555555556rem; 
 }
 
-.lightbox__navigation .links a {
+.lightbox .links a {
     color: var(--gold);
 }
 .lightbox__navigation .links{
@@ -253,7 +258,7 @@ html[lang="es-ES"] .en-EN {
     gap: 1rem;
 }
 
-.lightbox__navigation .links svg {
+.lightbox .links svg {
     width: 1.75rem;
     height: 1.75rem;
 }
@@ -272,8 +277,7 @@ html[lang="es-ES"] .en-EN {
     font-size: 2rem;
     width: 3.3333rem;
     height: 3.3333rem;
-    background: #022c3c;
-    color: #fff;
+    background: var(--navbar-background);
     border-radius: 50%;
     position: fixed;
     bottom: 1rem;
@@ -321,44 +325,14 @@ html[lang="es-ES"] .en-EN {
     animation-direction: forwards;
 }
 
-/* 1024 */
-@media all and (min-width:1024px) {
+.scroll-to-top svg {
+    width: 1.7rem;
+    height: 1.7rem;
+} 
 
-    /* .lightbox .lightbox__content {
-        display: flex;
-        padding: 0 1rem 10rem 1rem;
-        flex-direction: column;
-        min-height: 100vh;
-        max-width: var(--lightbox-tablet);
-        margin: auto;   
-    }
-
-    .lightbox .lightbox__content .image-container {
-        aspect-ratio: 3/2;
-        padding: 2rem 2rem 3rem 2rem;
-        background: var(--canvas-color);
-    }
-
-    .image-container img {
-        max-height: 100%;
-    }
-
-    .lightbox p {
-        text-indent: 2rem;
-        margin: 0;
-    }
-
-    .lightbox .copy-wrapper {
-        columns: 2;
-        column-gap: 2rem;
-    } */
-
-}
-/* end 1024 */
 
 /* 1300 */
 @media all and (min-width:1300px) {
-
 
 .lightbox .lightbox__content {
         display: flex;
@@ -372,6 +346,7 @@ html[lang="es-ES"] .en-EN {
 .lightbox .lightbox__content .image-container {
     padding-top: 3.3333rem;
     max-width: 100%;
+    justify-content: flex-start;
 }
 
 .lightbox .lightbox__content .image-wrapper {
@@ -420,43 +395,13 @@ html[lang="es-ES"] .en-EN {
 
 /* End 1300 */
 
-/* 1600 */
-/* @media all and (min-width:1600px) {
-
-    .lightbox .lightbox__content {
-        display: flex;
-        padding: 0 1rem 10rem 1rem;
-        flex-direction: column;
-        min-height: 100vh;
-        max-width: var(--lightbox-laptop);
-        margin: auto;   
-    }
-
-    .lightbox .lightbox__content .image-container {
-        aspect-ratio: 3/2;
-        padding: 2rem 2rem 3rem 2rem;
-        background: var(--canvas-color);
-    }
-
-    .image-container img {
-        max-height: 100%;
-    }
-
-    .lightbox p {
-        text-indent: 2rem;
-        margin: 0;
-    }
-
-    .lightbox .copy-wrapper {
-        columns: 3;
-        column-gap: 2rem;
-    }
-
-} */
-/* end 1600 */
 
 /* 2400 */
 @media all and (min-width:2000px) {
+
+    .lightbox {
+        padding-top: 3.3333rem;
+    }
 
     .lightbox__navigation { 
         padding: .7rem 1rem;
@@ -485,7 +430,6 @@ html[lang="es-ES"] .en-EN {
 .lightbox .lightbox__content .image-wrapper {
         order: 3;
         flex: 30% 1 0;
-        //padding: 4rem 0 0 0;
         margin: 0;
         max-height: 100%;
     }
