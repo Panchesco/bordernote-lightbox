@@ -2,10 +2,10 @@ async function getJsonPost(postId) {
   const formData = new FormData();
 
   formData.append('action', 'get_json_post');
-  formData.append('nonce', AjaxJsonPosts.nonce);
+  formData.append('nonce', BordernoteLightbox.nonce);
   formData.append('post_id', postId);
 
-  const response = await fetch(AjaxJsonPosts.ajax_url, {
+  const response = await fetch(BordernoteLightbox.ajax_url, {
     method: 'POST',
     body: formData
   });
@@ -17,11 +17,11 @@ async function getJsonCategoryPosts(categoryId, limit = 10) {
   const formData = new FormData();
 
   formData.append('action', 'get_json_category_posts');
-  formData.append('nonce', AjaxJsonPosts.nonce);
+  formData.append('nonce', BordernoteLightbox.nonce);
   formData.append('category_id', categoryId);
   formData.append('limit', limit);
 
-  const response = await fetch(AjaxJsonPosts.ajax_url, {
+  const response = await fetch(BordernoteLightbox.ajax_url, {
     method: 'POST',
     body: formData
   });
@@ -60,7 +60,10 @@ window.addEventListener("DOMContentLoaded", () => {
 function getOrientation(url) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    img.src = url;
     const imgData = {width:0,height:0,orientation:'square'};
+
+    
 
     img.onload = () => {
       if (img.naturalWidth > img.naturalHeight) {
@@ -72,6 +75,7 @@ function getOrientation(url) {
         imgData.width = img.naturalWidth;
         imgData.height = img.naturalHeight;
         imgData.orientation = 'portrait';
+        console.log(imgData);
         resolve(imgData);
       } else {
         imgData.width = img.naturalWidth;
@@ -89,10 +93,13 @@ function getOrientation(url) {
 window.addEventListener("DOMContentLoaded", () => {
 
                const lightboxToggle = document.querySelectorAll(".lightbox__toggle");
-               const lightboxImage = document.querySelector(".lightbox img");
+               const lightboxImage = document.querySelector(".lightbox .image-container img");
                const scrollTop = document.querySelectorAll(".scroll-to-top");
                const lightbox = document.querySelector(".lightbox");
                const imageUrl = lightboxImage.getAttribute("src");
+
+               console.log(imageUrl);
+
                lightboxToggle.forEach( (item) => {
                 item.addEventListener("click",(e) => {
                     e.preventDefault();
@@ -111,7 +118,6 @@ window.addEventListener("DOMContentLoaded", () => {
                scrollTop.forEach( (item) => {
                 item.addEventListener("click",(e) => {
                     e.preventDefault();
-                    console.log('scrollTop');
                     lightbox.scrollTo({
                       top: 0,
                       left: 0,
@@ -124,7 +130,6 @@ window.addEventListener("DOMContentLoaded", () => {
                lightbox.addEventListener("scroll", () => {
                 const lightboxHeight = parseInt(document.querySelector(".lightbox__content").scrollHeight);
                 const scroll = document.querySelector(".lightbox__content").getBoundingClientRect().top;
-                console.log(scroll);
                 const scrollToTop = document.querySelector('.scroll-to-top');
                 if( Math.abs(scroll) >= (lightboxHeight/12) ) {
                     scrollToTop.classList.add('show');
@@ -134,6 +139,3 @@ window.addEventListener("DOMContentLoaded", () => {
                }); 
                
 });
-
-
-
