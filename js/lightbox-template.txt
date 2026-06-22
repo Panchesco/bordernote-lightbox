@@ -1,0 +1,33 @@
+function bordernoteLightbox(data) {
+return `
+<div class="lightbox">
+    <nav id="lightboxNavigation" class="lightbox__navigation">
+        <a href="#" class="lightbox__toggle">Bordernote</a>
+        <div class="links">
+            <a href="#" onclick="javascript:void(0);" class="prev-post" data-prevId="`${data.prevId}`"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path fill="currentColor" d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></a>
+            <a href="#" onclick="javascript:void(0);" class="next-post" data-nextId="`${data.prevId}`"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path fill="currentColor" d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></a>
+            <a href="#" onclick="javascript:void(0);" class="lightbox__toggle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path fill="currentColor" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a>
+        </div>
+    </nav>
+    <div class="lightbox__content">
+      <!-- scrollable modal content here -->
+        <!-- <div class="header-wrapper"> --> 
+       <div class="image-wrapper `${data.image_orientation}`">
+            <div class="image-container">
+                <img id="image" src="`${data.image}`">
+            </div><!-- end .image-container -->
+        </div><!-- end .image-wrapper -->
+        <div class="copy-block">
+            <div class="heading-wrapper">
+                <h1>`${data.honorific}` `${data.first_name}` `${data.last_name}` <span class="age">`${data.age}`</span> <span class="locale">`${data.locale}`</span></h1>
+            </div><!-- end .heading-wrapper -->
+            <div class="copy-wrapper en-EN">`${data.narrative_en}`</div>
+            <div class="copy-wrapper es-ES">`${data.narrative_es}`</div>
+            <!-- end .copy-wrapper.es -->
+            <div class="scroll-to-top"><a href="#" onclick="javascript:void(0);">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path fill="currentColor" d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"/></svg>
+            </a></div>
+  </div><!-- end .lightbox__content -->
+</div><!-- end .lightbox -->
+`
+}
