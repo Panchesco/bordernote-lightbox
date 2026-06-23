@@ -49,7 +49,43 @@ class Bordernote_Lightbox {
         wp_enqueue_style('bordernote-lightbox');
     }
 
+private function get_adjacent_posts($post_id) {
+    
+    global $post;
+    
+    $post = get_post($post_id);
+    
+    if($post) {
+        setup_postdata($post);
+
+        $adjacent = [
+            'previous' => get_previous_post(true,'','category'),
+            'next' => get_next_post(true,'','category')
+        ];
+
+    } else {
+        $adjacent = ['previous' => null,'next' => null];
+    }
+
+    foreach($adjacent as $key => $entry) {
+
+        if (function_exists('get_field_objects')) {
+        $fields = get_field_objects($entry->ID);
+
+            $adjacent[$key]->acf = $fields;
+            
+        }
+
+    }
+
+    wp_reset_postdata();
+    
+    return $adjacent;
+    
+}
+
 private function format_post($post) {
+    
     $acf_fields = [];
 
     if (function_exists('get_field_objects')) {
@@ -81,6 +117,7 @@ private function format_post($post) {
             'fields' => 'names',
         ]),
         'acf' => $acf_fields,
+        'adjacent' => $this->get_adjacent_posts($post->ID)
     ];
 }
 
@@ -97,7 +134,7 @@ private function format_post($post) {
 
         if (!$post || $post->post_status !== 'publish') {
             wp_send_json_error(['message' => 'Post not found.'], 404);
-        }
+        } 
 
         wp_send_json_success($this->format_post($post));
     }
@@ -124,5 +161,29 @@ private function format_post($post) {
         wp_send_json_success($data);
     }
 }
+
+// Filter to add next and previous post ids of same category to REST response
+add_filter('rest_prepare_post', function ($response, $post, $request) {
+
+    // Skip collection requests
+    if (!isset($request['id'])) {
+        return $response;
+    }
+
+    global $post;
+    $post = get_post($response->data['id']);
+    setup_postdata($post);
+
+    $next = get_adjacent_post(true, '', false,'category');
+    $prev = get_adjacent_post(true, '', true, 'category');
+
+    wp_reset_postdata();
+
+    $response->data['next_post_id'] = $next ? $next->ID : null;
+    $response->data['previous_post_id'] = $prev ? $prev->ID : null;
+
+    return $response;
+
+}, 10, 3);
 
 new Bordernote_Lightbox();

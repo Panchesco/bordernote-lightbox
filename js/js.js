@@ -1,3 +1,7 @@
+
+
+console.log(BordernoteLightbox);
+
 async function getJsonPost(postId) {
   const formData = new FormData();
 
@@ -62,9 +66,6 @@ function getOrientation(url) {
     const img = new Image();
     img.src = url;
     const imgData = {width:0,height:0,orientation:'square'};
-
-    
-
     img.onload = () => {
       if (img.naturalWidth > img.naturalHeight) {
         imgData.width = img.naturalWidth;
@@ -92,50 +93,59 @@ function getOrientation(url) {
 
 window.addEventListener("DOMContentLoaded", () => {
 
-               const lightboxToggle = document.querySelectorAll(".lightbox__toggle");
-               const lightboxImage = document.querySelector(".lightbox .image-container img");
-               const scrollTop = document.querySelectorAll(".scroll-to-top");
-               const lightbox = document.querySelector(".lightbox");
-               const imageUrl = lightboxImage.getAttribute("src");
+              //  const lightboxToggle = document.querySelectorAll(".lightbox__toggle");
+              //  const lightboxImage = document.querySelector(".lightbox .image-container img");
+              //  const scrollTop = document.querySelectorAll(".scroll-to-top");
+              //  const lightbox = document.querySelector(".lightbox");
+              //  const imageUrl = lightboxImage.getAttribute("src");
 
-               console.log(imageUrl);
+              //  lightboxToggle.forEach( (item) => {
+              //   item.addEventListener("click",(e) => {
+              //       e.preventDefault();
+              //  // Get the image orienation
+              // getOrientation(imageUrl)
+              //   .then(imgData => {
+              //     document.querySelector(".image-container").classList.add(imgData.orientation);
+              //   })
+              //   .then(() => {
+              //     document.querySelector("body").classList.toggle("lightbox-open");
+              //     document.querySelector("body").classList.toggle("lightbox-closed");
+              //   });
+              //   })
+              //  })
 
-               lightboxToggle.forEach( (item) => {
-                item.addEventListener("click",(e) => {
+              //  scrollTop.forEach( (item) => {
+              //   item.addEventListener("click",(e) => {
+              //       e.preventDefault();
+              //       lightbox.scrollTo({
+              //         top: 0,
+              //         left: 0,
+              //         behavior: 'smooth'
+              //       });
+              //   })
+              //  })
+
+              //  // Scroll to top visibility
+              //  lightbox.addEventListener("scroll", () => {
+              //   const lightboxHeight = parseInt(document.querySelector(".lightbox__content").scrollHeight);
+              //   const scroll = document.querySelector(".lightbox__content").getBoundingClientRect().top;
+              //   const scrollToTop = document.querySelector('.scroll-to-top');
+              //   if( Math.abs(scroll) >= (lightboxHeight/12) ) {
+              //       scrollToTop.classList.add('show');
+              //   } else {
+              //       scrollToTop.classList.remove('show')
+              //   }
+              //  }); 
+
+              document.querySelectorAll('.open-lightbox').forEach((item) => {
+                item.addEventListener("click", (e) => {
                     e.preventDefault();
-               // Get the image orienation
-              getOrientation(imageUrl)
-                .then(imgData => {
-                  document.querySelector(".image-container").classList.add(imgData.orientation);
+                    getJsonPost(item.dataset.post_id).then( (data) => {
+                    console.log(data)
+                  });
                 })
-                .then(() => {
-                  document.querySelector("body").classList.toggle("lightbox-open");
-                  document.querySelector("body").classList.toggle("lightbox-closed");
-                });
-                })
-               })
-
-               scrollTop.forEach( (item) => {
-                item.addEventListener("click",(e) => {
-                    e.preventDefault();
-                    lightbox.scrollTo({
-                      top: 0,
-                      left: 0,
-                      behavior: 'smooth'
-                    });
-                })
-               })
-
-               // Scroll to top visibility
-               lightbox.addEventListener("scroll", () => {
-                const lightboxHeight = parseInt(document.querySelector(".lightbox__content").scrollHeight);
-                const scroll = document.querySelector(".lightbox__content").getBoundingClientRect().top;
-                const scrollToTop = document.querySelector('.scroll-to-top');
-                if( Math.abs(scroll) >= (lightboxHeight/12) ) {
-                    scrollToTop.classList.add('show');
-                } else {
-                    scrollToTop.classList.remove('show')
-                }
-               }); 
-               
+              });
+             
 });
+
+
